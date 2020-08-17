@@ -4,31 +4,26 @@
 # @param {Integer} target
 # @return {Integer}
 def search(nums, target)
-  s = 0
-  e = nums.length - 1
-  while s <= e do
-    mid = (s + e)/2
-    if nums[mid] == target then
-      return mid
-    elsif nums[s] == target then
-      return s
-    elsif nums[s] <= nums[mid] then
-      if nums[e] < target && target < nums[mid] then
-        e = mid - 1
-      elsif nums[e] == target
-        return e
+  left = 0
+  right = nums.length - 1
+  while left <= right do
+      mid = (left + right)/2
+      return mid if nums[mid] == target
+      
+      if nums[mid] >= nums[left]
+          if nums[mid] > target && nums[left] <= target
+              right = mid - 1
+          else
+              left = mid + 1
+          end
       else
-        s = mid + 1
+          if nums[mid] <= target && nums[left] > target 
+              left = mid + 1
+          else
+              right = mid - 1
+          end
       end
-    else
-      if nums[mid] < target && target < nums[e] then
-        s = mid + 1
-      elsif target == nums[e]
-        return e
-      else
-        e = mid - 1
-      end
-    end
   end
+  
   return -1
 end
